@@ -1,0 +1,23 @@
+<!-- new_task_form.html -->
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">{{ modal_title | default('Action:') }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" hx-post="/task/create" hx-target="#task-list">
+                <div class="mb-3">
+                    <label for="taskTitle" class="form-label">Task Title:</label>
+                    <input type="text" class="form-control" id="taskTitle" name="title" required>
+                </div>
+                <button class="btn btn-primary" type="submit" data-bs-dismiss="modal">Add Task</button>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
+
+

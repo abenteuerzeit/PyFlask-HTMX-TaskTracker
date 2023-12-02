@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Task Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+</head>
+<body>
+<div class="container my-5">
+    <h1 class="text-center mb-4">Task Tracker</h1>
+
+    <div class="d-flex justify-content-end mb-3">
+        <button hx-get="/task/new?modal_title=Add+New+Task"
+                hx-target="#modals"
+                hx-trigger="click"
+                data-bs-toggle="modal"
+                data-bs-target="#modals"
+                class="btn btn-outline-primary">Add New Task
+        </button>
+    </div>
+
+    <div id="modals" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+    <div id="task-list" class="mt-4">
+        {% include 'task_list.html' %}
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/htmx.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>
