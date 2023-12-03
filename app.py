@@ -1,26 +1,21 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, g
+
+from utils.connection import Database
 
 app = Flask(__name__)
 
-# In-memory database setup (a simple list)
-tasks = []
+
+def get_db():
+    if 'db' not in g:
+        g.db = Database()
+    return g.db
 
 
-# Utility function to find a task by ID
-def get_task(task_id):
-    return next((task for task in tasks if task['id'] == task_id), None)
-
-
-# Utility function to generate a new task ID
-def generate_new_task_id():
-    return max(task['id'] for task in tasks) + 1 if tasks else 1
-
-
-# Home page route
 @app.route('/')
 def home_page():
     """Display the home page with the list of tasks."""
-    return render_template('index.html', tasks=tasks)
+    db = get_db()
+    return render_template('index.html', tasks=db.get_all_tasks())
 
 
 # Route to display the form for adding a new task
@@ -34,52 +29,51 @@ def show_new_task_form():
 # Route to create a new task
 @app.route('/task/create', methods=['POST'])
 def add_new_task():
-    """Create a new task and return the updated task list."""
-    new_id = generate_new_task_id()
-    new_task = {"id": new_id, "title": request.form['title']}
-    tasks.append(new_task)
-    return render_template('task_list.html', tasks=tasks)
+    """Add a new task and return the updated task list."""
+    new_task = {"title": request.form['title']}
+    db = get_db()
+    db.add_task(new_task)
+    return render_template('task_list.html', tasks=db.get_all_tasks())
 
 
 # Route to display the form for editing a task
-@app.route('/task/<int:task_id>/edit')
+@app.route('/task/<string:task_id>/edit')
 def show_edit_task_form(task_id):
     """Display the form to edit an existing task."""
-    task = get_task(task_id)
+    db = get_db()
+    task = db.get_task(task_id)
     if task:
         return render_template('edit_task_form.html', task=task)
     return redirect(url_for('page_not_found'))
 
 
 # Route to update a task
-@app.route('/task/<int:task_id>/update', methods=['POST'])
+@app.route('/task/<string:task_id>/update', methods=['POST'])
 def update_task(task_id):
     """Update an existing task and return the updated task list."""
-    task = get_task(task_id)
-    if task:
-        task['title'] = request.form['title']
-        return render_template('task_list.html', tasks=tasks)
-    return redirect(url_for('page_not_found'))
+    db = get_db()
+    updated_title = request.form['title']
+    db.update_task(task_id, {"title": updated_title})
+    return render_template('task_list.html', tasks=db.get_all_tasks())
 
 
 # Route dialog to delete a task
-@app.route('/task/<int:task_id>/delete')
+@app.route('/task/<string:task_id>/delete')
 def show_delete_task_form(task_id):
     """Display the form to delete an existing task."""
-    task = get_task(task_id)
+    db = get_db()
+    task = db.get_task(task_id)
     if task:
         return render_template('delete_task_form.html', task=task)
     return redirect(url_for('page_not_found'))
 
 
-@app.route('/task/<int:task_id>/drop', methods=['DELETE'])
+@app.route('/task/<string:task_id>/drop', methods=['DELETE'])
 def delete_task(task_id):
     """Delete a task and return the updated task list."""
-    task = get_task(task_id)
-    if task:
-        tasks.remove(task)
-        return render_template('task_list.html', tasks=tasks)
-    return redirect(url_for('page_not_found'))
+    db = get_db()
+    db.delete_task(task_id)
+    return render_template('task_list.html', tasks=db.get_all_tasks())
 
 
 # Modal
@@ -90,12 +84,15 @@ def show_modal():
 
 @app.route('/cancel')
 def cancel():
-    return render_template('task_list.html', tasks=tasks)
+    db = get_db()
+    return render_template('task_list.html', tasks=db.get_all_tasks())
 
 
 # Error handling for 404 Not Found
 @app.errorhandler(404)
 def page_not_found(e):
+    print(e.__traceback__.tb_frame.f_code.co_filename)
+    print(request.url)
     print(e)
     return render_template('404.html'), 404
 
