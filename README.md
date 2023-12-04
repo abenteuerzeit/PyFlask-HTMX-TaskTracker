@@ -6,7 +6,7 @@ PyFlask-HTMX-TaskTracker is a web-based task management application designed to 
 
 ## Demo
 
-https://github.com/abenteuerzeit/PyFlask-HTMX-TaskTracker/assets/98088666/89448991-7d96-4917-a0cb-1093489774b9
+<https://github.com/abenteuerzeit/PyFlask-HTMX-TaskTracker/assets/98088666/89448991-7d96-4917-a0cb-1093489774b9>
 
 ## Why HTMX?
 
@@ -28,37 +28,45 @@ HATEOAS is a constraint of the REST application architecture that keeps the REST
 To set up and run PyFlask-HTMX-TaskTracker, follow these steps:
 
 1. **Clone the Repository**:
+
    ```
    git clone https://github.com/abenteuerzeit/PyFlask-HTMX-TaskTracker.git
    ```
 
 2. **Navigate to the Project Directory**:
-   ```
+
+   ```bash
    cd PyFlask-HTMX-TaskTracker
    ```
 
 3. **Create a Virtual Environment** (optional but recommended):
-   ```
+
+   ```bash
    python -m venv venv
    ```
 
    Activate the virtual environment:
 
    - On Windows:
+
      ```
      venv\Scripts\activate
      ```
+
    - On macOS and Linux:
+
      ```
      source venv/bin/activate
      ```
 
 4. **Install Dependencies**:
+
    ```
    pip install -r requirements.txt
    ```
 
 5. **Run the Application**:
+
    ```
    python app.py
    ```
@@ -69,11 +77,10 @@ To set up and run PyFlask-HTMX-TaskTracker, follow these steps:
 
 We welcome contributions to the PyFlask-HTMX-TaskTracker project! To contribute, please fork the repository, make your changes, and then submit a pull request back to the main repository. If you have suggestions for improvements or encounter any issues, feel free to open an issue in the repository. We appreciate your input in making this project better!
 
-
 ## License
 
 This project is licensed under the [European Union Public License (EUPL)](https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12).
 
 ## Contact
 
-For any further queries or feedback, feel free to reach out to me at v-adrianmroz@microsoft.com
+For any further queries or feedback, feel free to reach out to me at <v-adrianmroz@microsoft.com>
