@@ -1,15 +1,21 @@
-<!-- delete_task_form.html -->
+<!-- tasks/delete.html -->
 
-<form method="post" hx-delete="/task/{{ task._id }}/drop" hx-target="#task-list">
+{#
+    Variables:
+        document: The document to delete
+
+#}
+
+<form method="post" hx-delete="/tasks/{{ document._id }}/drop" hx-target="#tasks">
     <div class="card">
         <div class="card-header">
             Confirm Deletion
         </div>
         <div class="card-body">
-            <p class="card-text">Are you sure you want to delete "{{ task.title }}"?</p>
+            <p class="card-text">Are you sure you want to delete "{{ document.title }}"?</p>
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-danger me-2">Confirm Delete</button>
-                <button hx-get="/cancel" hx-trigger="click" hx-target="#task-list"
+                <button hx-get="/cancel" hx-trigger="click" hx-target="#tasks"
                         class="btn btn-secondary">Cancel
                 </button>
             </div>

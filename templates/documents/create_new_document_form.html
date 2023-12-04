@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New {{ collection_name | capitalize }}</title>
+</head>
+<body>
+<h1>Create New {{ collection_name | capitalize }}</h1>
+<form hx-post="/{{ collection_name }}/new" hx-target="this" hx-swap="outerHTML">
+    {% if collection_name == 'users' %}
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <!-- Add other user fields as necessary -->
+    {% elif collection_name == 'tasks' %}
+        <div>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description"></textarea>
+        </div>
+        <!-- Add other task fields as necessary -->
+    {% endif %}
+    <button type="submit">Create {{ collection_name | capitalize }}</button>
+</form>
+<script src="{{ url_for('static', filename='js/htmx.min.js') }}"></script>
+<script src="{{ url_for('static', filename='bootstrap-5.3.2-dist/js/bootstrap.js') }}"></script>
+</body>
+</html>

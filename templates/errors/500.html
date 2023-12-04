@@ -1,0 +1,10 @@
+<!-- 500 Internal Server Error Component -->
+
+<div class="container">
+    <h1>500 - Internal Server Error</h1>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% else %}
+        <p>Something went wrong on our end. Please try again later.</p>
+    {% endif %}
+</div>
