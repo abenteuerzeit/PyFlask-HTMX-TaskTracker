@@ -13,25 +13,27 @@ logger = logging.getLogger(__name__)
 
 
 def database_connection(func):
+    """Decorator to ensure database connection before operation."""
     def wrapper(self, *args, **kwargs):
-        if not self.is_connected:
+        if not self.client:
             self.initialize_db()
+            if not self.client:
+                logger.error("Operation failed: Database is not connected.")
+                return None if func.__name__ != 'update_document' else False
         return func(self, *args, **kwargs)
-
     return wrapper
 
 
 class Database:
     def __init__(self, database_name="tasktracker"):
         self.db_name = database_name
-        self.is_connected = False
         self.client = None
         self.collections = []
         self.initialize_db()
 
     def initialize_db(self, uris=None):
-        if self.is_connected:
-            return
+        if self.client:
+            return self.client
 
         if uris is None:
             uris = [
@@ -49,17 +51,18 @@ class Database:
             self.client = MongoClient(uri)
             self.client.admin.command('ping')
             self.collections = self.client[self.db_name].list_collection_names()
-            self.is_connected = True
             atexit.register(self.close_connection)
             logger.info(f"Connected to MongoDB using URI: {uri}")
         except ConnectionFailure:
             logger.error(f"Failed to connect to MongoDB using URI: {uri}, trying the next option...")
             self.initialize_db(uris[1:])
+        except IndexError:
+            logger.warning("No valid URI found in the current attempt.")
 
     def close_connection(self):
-        if self.is_connected and self.client:
+        if self.client:
             self.client.close()
-            self.is_connected = False
+            self.client = None
             logger.info("MongoDB connection closed.")
 
     @staticmethod
@@ -80,7 +83,7 @@ class Database:
             collection = self.client[self.db_name][collection_name]
             return collection.insert_one(new_document).inserted_id
         except PyMongoError as e:
-            logger.error(f"Error adding document to MongoDB: {e}")
+            logger.error(f"Error adding document to MongoDB {collection_name} collection: {e}")
             return None
 
     @database_connection
@@ -94,7 +97,7 @@ class Database:
 
             return list(collection.find())
         except PyMongoError as e:
-            logger.error(f"Error retrieving document(s) from MongoDB: {e}")
+            logger.error(f"Error retrieving document(s) from MongoDB {collection_name} collection: {e}")
             return None if _id else []
 
     @database_connection
