@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document Manager</title>
+    <style>
+    </style>
+</head>
+<body>
+<header>
+    <h1>{{ action | capitalize }} Document in {{ collection | capitalize }}</h1>
+</header>
+<main>
+    <!-- Dynamic Form for Create and Update -->
+    {% if action in ['CREATE', 'UPDATE'] %}
+        <form method="POST" hx-post="{{ request.url }}" hx-target="this" hx-swap="outerHTML">
+            {% for key, value in fields.items() %}
+                <div>
+                    <label for="{{ key }}">{{ key | capitalize }}:</label>
+                    <input type="{{ value }}" id="{{ key }}" name="{{ key }}" required>
+                </div>
+            {% endfor %}
+            <button type="submit">{{ action | capitalize }}</button>
+        </form>
+    {% endif %}
+
+    <!-- Display Document Details for Read -->
+    {% if action == 'READ' %}
+        <div>
+            <h2>Document Details</h2>
+            {% if document_data %}
+                {% for key, value in document_data.items() %}
+                    <p><strong>{{ key | capitalize }}:</strong> {{ value }}</p>
+                {% endfor %}
+            {% else %}
+                <p>Document not found.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <!-- Confirm Deletion for Delete -->
+    {% if action == 'DELETE' %}
+        <div>
+            <h2>Confirm Deletion</h2>
+            <p>Are you sure you want to delete this document?</p>
+            <form method="POST" hx-delete="{{ request.url }}" hx-target="this" hx-swap="outerHTML">
+                <input type="hidden" name="confirm_delete" value="true">
+                <button type="submit">Confirm Delete</button>
+            </form>
+        </div>
+    {% endif %}
+
+    <!-- Additional Operations: Search, Sort, Aggregate -->
+    <section>
+        <!-- Search Form -->
+        {#        <form hx-get="/search" hx-target="#search-results" hx-swap="outerHTML">#}
+        {#            <label for="query">Search:</label>#}
+        {#            <input type="text" name="query" placeholder="Search...">#}
+        {#            <button type="submit">Search</button>#}
+        {#        </form>#}
+
+        <!-- Sort Options -->
+        <div>
+            <!-- Add sort options here -->
+        </div>
+
+        <!-- Aggregate Options -->
+        <div>
+            <!-- Add aggregate options here -->
+        </div>
+    </section>
+
+    <!-- Search Results Section -->
+    <section id="search-results">
+        <!-- Results will be dynamically loaded here -->
+    </section>
+
+    <!-- Feature Flags and Toggles -->
+    <section>
+        <!-- Add feature flags and toggle buttons here -->
+    </section>
+</main>
+<footer>
+    <!-- Footer content -->
+</footer>
+<script src="{{ url_for('static', filename='js/htmx.min.js') }}"></script>
+<script src="{{ url_for('static', filename='bootstrap-5.3.2-dist/js/bootstrap.js') }}"></script>
+</body>
+</html>

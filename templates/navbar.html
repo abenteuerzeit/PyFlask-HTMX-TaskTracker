@@ -1,0 +1,53 @@
+{# navbar.html #}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Document Manager</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <!-- CRUD Operations for Collections -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="collectionsDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Collections
+                </a>
+                <div class="dropdown-menu" aria-labelledby="collectionsDropdown">
+                    <a class="dropdown-item" href="#" hx-get="/collections/create" hx-target="#main-content"
+                       hx-swap="outerHTML">Create Collection</a>
+                    <a class="dropdown-item" href="#" hx-get="/collections/read" hx-target="#main-content"
+                       hx-swap="outerHTML">View Collections</a>
+                    <!-- Additional CRUD operations for collections -->
+                </div>
+            </li>
+
+            <!-- CRUD Operations for Documents -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="documentsDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Documents
+                </a>
+                <div class="dropdown-menu" aria-labelledby="documentsDropdown">
+                    <!-- Dynamic document operations based on selected collection -->
+                </div>
+            </li>
+
+            <!-- Search Form -->
+            <li class="nav-item">
+                <form class="form-inline my-2 my-lg-0" hx-get="/search" hx-target="#main-content" hx-swap="outerHTML">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </li>
+        </ul>
+
+        <!-- Toggle for Light/Dark Mode -->
+        <button class="btn btn-secondary my-2 my-sm-0" type="button" id="toggleTheme">Toggle Theme</button>
+    </div>
+</nav>
+
+<!-- Container for main content -->
+<div id="main-content"></div>

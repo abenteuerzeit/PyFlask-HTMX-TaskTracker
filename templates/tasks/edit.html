@@ -1,0 +1,16 @@
+<!-- tasks/edit.html -->
+
+{#
+    Variables:
+        document: The document to edit
+
+#}
+
+<form method="post" hx-post="/tasks/{{ document._id }}/update" hx-target="#tasks" class="form-group">
+    <div class="mb-3">
+        <label for="taskTitle" class="form-label">Task Title:</label>
+        <input type="text" class="form-control" id="taskTitle" name="title" value="{{ document.title }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Task</button>
+    <button type="button" class="btn btn-secondary" hx-get="/cancel" hx-target="#tasks">Cancel</button>
+</form>
