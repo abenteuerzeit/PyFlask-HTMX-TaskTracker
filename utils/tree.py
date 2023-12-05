@@ -1,5 +1,5 @@
-import os
 import fnmatch
+import os
 from pathlib import Path
 
 
@@ -15,7 +15,7 @@ def read_gitignore(root_directory):
 
 
 def should_ignore(path, directory_patterns, file_patterns, ignore_git_folder):
-    if ignore_git_folder and path.split(os.sep)[0] == '.git':
+    if ignore_git_folder and '.git' in path.split(os.sep):
         return True
     for pattern in directory_patterns:
         if path.endswith('/') and fnmatch.fnmatch(path, pattern):
@@ -33,7 +33,7 @@ def print_file_tree(current_directory,
                     indent_level=0,
                     write_to_file=False,
                     log_file_path=None,
-                    ignore_git_folder=False):
+                    ignore_git_folder=True):
 
     prefix = '    ' * indent_level if output_style == 'indent' else '|   ' * indent_level + '|-- ' if indent_level > 0 else ''
 
@@ -66,8 +66,8 @@ if __name__ == '__main__':
     dir_patterns, f_patterns = read_gitignore(project_root_directory)
     log_path = os.path.join(os.getcwd(), 'file_tree.log')
 
-    logging_enabled = True
-    style = 'tree',
+    logging_enabled = False
+    style = 'tree'  # Corrected from 'tree',
 
     if logging_enabled:
         with open(log_path, 'w'):
@@ -79,6 +79,5 @@ if __name__ == '__main__':
         dir_patterns, f_patterns,
         output_style=style,
         write_to_file=logging_enabled,
-        log_file_path=log_path,
-        ignore_git_folder=logging_enabled
+        log_file_path=log_path
     )
