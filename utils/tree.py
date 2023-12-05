@@ -67,7 +67,7 @@ if __name__ == '__main__':
     log_path = os.path.join(os.getcwd(), 'file_tree.log')
 
     logging_enabled = False
-    style = 'tree'  # Corrected from 'tree',
+    style = 'tree'
 
     if logging_enabled:
         with open(log_path, 'w'):
