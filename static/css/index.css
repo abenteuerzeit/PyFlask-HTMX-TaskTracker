@@ -1,2 +1,26 @@
 /* index.bootstrap */
 
+/* Custom CSS for the Sign Up Modal */
+
+.form-control:focus {
+    border-color: #6c757d;
+    box-shadow: 0 0 0 0.25rem rgba(130, 138, 145, 0.25);
+}
+
+.modal-content {
+    transition: transform 0.3s ease-in-out;
+}
+
+.modal-dialog-centered {
+    animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
