@@ -1,4 +1,4 @@
-<!-- collections/new.html -->
+<!-- tasks/create.html -->
 
 <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -7,12 +7,12 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form method="post" hx-post="/{{ collection }}/create" hx-target="#tasks">
+            <form method="post" hx-post="/tasks/create" hx-target="#tasks">
                 <div class="mb-3">
-                    <label for="{{ collection }}" class="form-label">{{ collection }}:</label>
-                    <input type="text" class="form-control" id="{{ collection }}" name="input" required>
+                    <label for="taskTitle" class="form-label">Task Title:</label>
+                    <input type="text" class="form-control" id="taskTitle" name="title" required>
                 </div>
-                <button class="btn btn-primary" type="submit" data-bs-dismiss="modal">Add to {{ collection }}</button>
+                <button class="btn btn-primary" type="submit" data-bs-dismiss="modal">Add Task</button>
             </form>
         </div>
         <div class="modal-footer">

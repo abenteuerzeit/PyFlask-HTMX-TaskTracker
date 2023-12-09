@@ -1,0 +1,23 @@
+<!-- users/signup_success.html -->
+<div id="signup-success" class="container mt-5">
+    <div class="card text-center">
+        <div class="card-header">
+            <h2 class="card-title">Success!</h2>
+        </div>
+        <div class="card-body">
+            <p class="card-text">User {{ new_user.username }} created.</p>
+            <small class="text-muted">Automatically logged in</small>
+            <br>
+            <small class="text-muted">Created: {{ new_user.created_at }}</small>
+        </div>
+        <div class="card-footer">
+            <a href="/logout" class="btn btn-primary">Logout</a>
+            <a href="/users/{{ new_user.username }}" hx-get="/users/{{ new_user.username }}" hx-trigger="load"
+               class="btn btn-success">Profile</a>
+        </div>
+    </div>
+</div>
+
+{% for link in links %}
+    <link rel="{{ link.rel }}" href="{{ link.href }}">
+{% endfor %}

@@ -1,0 +1,42 @@
+{# users/create.html #}
+
+<!-- Modal - Sign Up -->
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">{{ title }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form id="signup-form" method="post" hx-post="users/signup" hx-target="#navbar" class="needs-validation"
+                  novalidate>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username:</label>
+                    <input type="text" id="username" name="username" required placeholder="Enter your username"
+                           autocomplete="username" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email"
+                           autocomplete="email" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password"
+                           autocomplete="new-password" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="confirm-password" class="form-label">Confirm Password:</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required
+                           placeholder="Confirm your password" autocomplete="new-password" class="form-control">
+                </div>
+                <div class="mb-3 text-end">
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Sign Up</button>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>
