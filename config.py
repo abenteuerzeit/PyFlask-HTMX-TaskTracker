@@ -5,6 +5,7 @@ import os
 class Config(object):
     ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
     STORAGE = 'mongodb'
+    SECRET_KEY = os.urandom(12).hex()
 
     # HATEOAS Configuration
 

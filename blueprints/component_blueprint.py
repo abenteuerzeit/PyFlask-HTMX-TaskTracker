@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template, current_app
+import logging
+
+from flask import Blueprint, render_template, current_app, session
 
 component = Blueprint('component', __name__)
 
@@ -6,6 +8,10 @@ component = Blueprint('component', __name__)
 @component.route('/')
 def home_page():
     """Display the home page with the list of tasks."""
+    # TODO: User session handling
+    is_logged_in = False
+    if 'username' in session:
+        is_logged_in = True
     tasks = current_app.db.read_documents("tasks")
     return render_template(
         'index.html',
@@ -31,8 +37,10 @@ def cancel():
 
 @component.route('/<string:collection>/new')
 def show_new_form(collection):
-    """Display the form to add a new document to a collection."""
-    add_to_collection_form = f"{collection}/new.html"
+    """Display the form to create a new document."""
+    # logging
+    logging.info(f"show_new_form = () => {collection}/create.html")
+    add_to_collection_form = f"{collection}/create.html"
     view_title = f"New {collection.capitalize()[:-1]}"
     return render_template(
         add_to_collection_form,

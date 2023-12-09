@@ -2,6 +2,7 @@ from flask import Flask, g
 
 from blueprints.api_blueprint import api
 from blueprints.component_blueprint import component
+from blueprints.user_blueprint import user
 from config import DevelopmentConfig
 from mongodb import init_db
 
@@ -14,7 +15,7 @@ with app.app_context():
 
 app.register_blueprint(component)
 app.register_blueprint(api)
-
+app.register_blueprint(user)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

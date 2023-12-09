@@ -70,10 +70,17 @@ class Database:
 
         try:
             collection = self.client[self.db_name][collection_name]
+            if collection_name == "users":
+                user = collection.find_one({'username': new_document['username']})
+                if user:
+                    raise ValueError(f"User {new_document['username']} already exists.")
+                return collection.insert_one(new_document).inserted_id
             return collection.insert_one(new_document).inserted_id
         except PyMongoError as e:
             logger.error(f"Error adding document to MongoDB {collection_name} collection: {e}")
-            return None
+        except ValueError as e:
+            logger.error(f"Error adding document to MongoDB {collection_name} collection: {e}")
+        return None
 
     @database_connection
     def read_documents(self, collection_name, _id=None):
@@ -81,6 +88,8 @@ class Database:
             collection = self.client[self.db_name][collection_name]
 
             if _id:
+                if collection_name == "users":
+                    return collection.find_one({'username': _id}) if _id else None
                 _id = self.process_id(_id)
                 return collection.find_one({'_id': _id}) if _id else None
 
