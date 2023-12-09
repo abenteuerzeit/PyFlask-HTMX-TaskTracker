@@ -41,33 +41,33 @@ To set up and run PyFlask-HTMX-TaskTracker, follow these steps:
 
 3. **Create a Virtual Environment** (optional but recommended):
 
-   ```bash
+   ```shell
    python -m venv venv
    ```
 
    Activate the virtual environment:
 
-   - On Windows:
+      - On Windows:
 
-     ```
-     venv\Scripts\activate
-     ```
+        ```shell
+        venv\Scripts\activate
+        ```
 
-   - On macOS and Linux:
+      - On macOS and Linux:
 
-     ```
-     source venv/bin/activate
-     ```
+        ```shell
+        source venv/bin/activate
+        ```
 
 4. **Install Dependencies**:
 
-   ```
+   ```shell
    pip install -r requirements.txt
    ```
 
 5. **Run the Application**:
 
-   ```
+   ```shell
    python app.py
    ```
 
