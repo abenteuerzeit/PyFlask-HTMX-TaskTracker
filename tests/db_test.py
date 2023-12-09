@@ -1,8 +1,12 @@
 import os
+from unittest.mock import Mock, patch
+
 import pytest
-from unittest.mock import Mock, patch, call
-from utils.connection import Database, database_connection
 from pymongo.errors import ConnectionFailure, PyMongoError
+
+from mongodb import Database
+
+MONGO_CLIENT = "mongodb.MongoClient"
 
 
 @pytest.fixture(autouse=True)
@@ -13,7 +17,7 @@ def mock_env_vars():
 
 @pytest.fixture
 def test_database(mock_mongo_client):
-    with patch('utils.connection.MongoClient', return_value=mock_mongo_client):
+    with patch(MONGO_CLIENT, return_value=mock_mongo_client):
         return Database(database_name="testdb")
 
 
@@ -43,7 +47,7 @@ def test_initialize_db_successful(test_database, mock_mongo_client):
 
 
 def test_initialize_db_failure(mock_env_vars, mock_mongo_client):
-    with patch('utils.connection.MongoClient') as mock_client:
+    with patch(MONGO_CLIENT) as mock_client:
         mock_client.side_effect = [ConnectionFailure("Connection failed"), mock_mongo_client]
 
         db = Database(database_name="testdb")
@@ -147,7 +151,7 @@ def test_pymongo_error_handling(test_database, mock_mongo_client):
 
 
 def test_connection_failure_handling(mock_env_vars):
-    with patch('utils.connection.MongoClient') as mock_client:
+    with patch(MONGO_CLIENT) as mock_client:
         mock_client.side_effect = [ConnectionFailure("Connection failure"), IndexError("Index error")]
         db = Database(database_name="testdb")
         assert db.client is None
