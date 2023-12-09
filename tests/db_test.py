@@ -145,7 +145,7 @@ def test_pymongo_error_handling(test_database, mock_mongo_client):
     mock_mongo_client.__getitem__.return_value.__getitem__.return_value.delete_one.side_effect = PyMongoError
 
     assert test_database.create_document("test_collection", {"name": "Test"}) is None
-    assert test_database.read_documents("test_collection") == []
+    assert test_database.read_documents("test_collection") is None
     assert not test_database.update_document("test_collection", "507f1f77bcf86cd799439011", {"name": "Updated"})
     assert not test_database.delete_document("test_collection", "507f1f77bcf86cd799439011")
 
