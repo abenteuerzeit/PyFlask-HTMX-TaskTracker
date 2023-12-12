@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'pyhtmx'
           slot-name: 'development'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EFD03D24F3B94B2EA6747AEC68493797 }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EFD03D24F3B94B2EA6747AEC68493797 }}
