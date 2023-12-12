@@ -8,7 +8,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.12 (PyFlask-HTMX-TaskTracker)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.12.1 WSL (Ubuntu): (/home/abenteuerzeit/.virtualenvs/PyFlask-HTMX-TaskTracker/bin/python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">

@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.12 (PyFlask-HTMX-TaskTracker)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (PyFlask-HTMX-TaskTracker)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12.1 WSL (Ubuntu): (/home/abenteuerzeit/.virtualenvs/PyFlask-HTMX-TaskTracker/bin/python)" project-jdk-type="Python SDK" />
 </project>
