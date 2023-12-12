@@ -1,6 +1,6 @@
 {# navbar.html #}
 
-<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+<nav id="navbar" class="navbar navbar-expand-lg container-fluid">
     <a class="navbar-brand" href="/">Task Tracker</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,20 +11,25 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item d-flex">
                 <form class="d-flex" hx-get="/search" hx-target="#main-content" hx-swap="outerHTML">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" disabled>
+                    <button class="btn btn-outline-success" type="submit" disabled>Search</button>
                 </form>
             </li>
         </ul>
-        <div class="d-flex">
+        <div class="d-flex align-items-center">
             {% if session['user_id'] %}
+                <div class="me-3">
+                    <p class="mb-0 text-primary">Hello, {{ session['username'] }}!</p>
+                </div>
+
                 <button
                         class="btn btn-outline-success me-2"
                         type="button"
                         hx-get="{{ url_for('user.logout', user_id=session['user_id']) }}"
                         hx-target="#navbar"
-                        hx-swap="outerHTML">
-                    Logout, {{ session['username'] }}
+                        hx-swap="outerHTML"
+                >
+                    Logout
                 </button>
             {% else %}
                 <button
@@ -33,7 +38,8 @@
                         hx-trigger="click"
                         data-bs-toggle="modal"
                         data-bs-target="#modals"
-                        class="btn btn-primary">
+                        class="btn btn-outline-primary me-2"
+                >
                     Login
                 </button>
                 <button hx-get="/users/new?modal_title=Sign+Up"
@@ -41,16 +47,28 @@
                         hx-trigger="click"
                         data-bs-toggle="modal"
                         data-bs-target="#modals"
-                        class="btn btn-outline-primary">
+                        class="btn btn-primary me-2">
                     Sign Up
                 </button>
             {% endif %}
-            <button
-                    class="btn btn-secondary ms-2"
-                    type="button"
-                    id="toggleTheme">
-                Toggle Theme
-            </button>
+
+            <!-- Theme Toggle Dropdown -->
+            <div class="btn-group ms-2">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="themeToggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    Toggle Theme
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="themeToggle">
+                    <li><a class="dropdown-item" href="#" data-theme="light"
+                           onclick="setTheme('light')">Light</a></li>
+                    <li><a class="dropdown-item" href="#" data-theme="dark"
+                           onclick="setTheme('dark')">Dark</a>
+                    </li>
+                    <li><a class="dropdown-item" href="#" data-theme="auto"
+                           onclick="setTheme('auto')">Auto</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
