@@ -49,7 +49,9 @@ jobs:
     environment:
       name: 'development'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
+    permissions:
+      id-token: write #This is required for requesting the JWT
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -60,10 +62,17 @@ jobs:
         run: unzip release.zip
 
       
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D707964C642B4DB3BEB3D412D8D2AB10 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8930F3E39E0D42BFB089263FF3AF9F68 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_96CAB6F16251424BBA5029636A1A37A4 }}
+
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
           app-name: 'pyhtmx'
           slot-name: 'development'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EFD03D24F3B94B2EA6747AEC68493797 }}
+          
